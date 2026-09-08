@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "packages": [
+    {
+      "id": "test",
+      "name": "Test",
+      "author": "Instinct Labs",
+      "version": "1.0.0",
+      "description": "Test Lua script for the Instinct Lua Repository.",
+      "file": "https://raw.githubusercontent.com/Instinct-Labs/Instinct-Lua-Repository/main/Test.lua"
+    }
+  ]
+}
