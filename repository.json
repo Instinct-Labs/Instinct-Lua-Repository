@@ -8,6 +8,14 @@
       "version": "1.0.0",
       "description": "Test Lua script for the Instinct Lua Repository.",
       "file": "https://raw.githubusercontent.com/Instinct-Labs/Instinct-Lua-Repository/main/Test.lua"
+    },
+    {
+      "id": "parker",
+      "name": "Parker",
+      "author": "Parker",
+      "version": "1.0.0",
+      "description": "Freemode features and utilities for Instinct.",
+      "file": "https://raw.githubusercontent.com/Instinct-Labs/Instinct-Lua-Repository/main/Parker.lua"
     }
   ]
 }
