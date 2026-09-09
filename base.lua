@@ -1,61 +1,70 @@
-
-script.name = "Instinct Lua Base"
-script.author = "Parker"
-script.version = "1.0.0"
-script.description = "A clean base for creating Instinct Lua scripts."
-
-
--- Script state
-
-local state = {
-    enabled = false
+metadata = {
+    name = "Dual UI Example",
+    author = "Instinct",
+    version = "1.0.0",
+    description = "List and Click UI example."
 }
 
+local snow = false
 
--- Menu
+local function set_snow(value)
+    snow = value
+    globals.at(262145):at(4413):set_int(value and 1 or 0)
+end
 
-local main = menu.create("Instinct Lua Base")
+-- List UI
 
-main:add_toggle(
-    "Enabled",
-    state.enabled,
-    function(value)
-        state.enabled = value
-    end,
-    "Enable or disable the script."
-)
+local main = menu.create("Dual UI Example")
 
-main:add_button(
-    "Example Action",
-    function()
-        log.info("Example action executed.")
-    end,
-    "Run an example action."
-)
+main:add_button("Switch to Click UI", function()
+    gui.set_click()
+end, "Switch to the Click UI.")
 
+main:add_toggle("Toggle Snow", snow, function(enabled)
+    set_snow(enabled)
+end, "Toggle snow on or off.")
 
--- Tick
+-- Click UI
 
-events.on("tick", function()
-    if not state.enabled then
-        return
+imgui.render(function()
+    if not gui.is_click() then return end
+
+    imgui.set_next_window_size(500, 300, imgui.Cond.FirstUseEver)
+
+    local visible = imgui.begin_window("Dual UI Example", imgui.WindowFlags.NoCollapse)
+
+    if visible then
+        imgui.text("Instinct Lua")
+        imgui.separator()
+
+        if imgui.button("Switch to List UI", 170, 30) then
+            imgui.end_window()
+            gui.set_list()
+            return
+        end
+
+        imgui.separator()
+
+        local value = imgui.checkbox("Toggle Snow", snow)
+
+        if value ~= snow then
+            set_snow(value)
+        end
+
+        imgui.separator()
+        imgui.text("Snow: " .. tostring(snow))
+        imgui.text("GUI: " .. gui.type())
     end
 
-    -- Script logic goes here.
+    imgui.end_window()
 end)
 
 
--- Unload
-
-events.on("unload", function()
-    state.enabled = false
+-- Loops
+script.run(function()
+    while true do
+        script.yield(0)
+    end
 end)
 
-
-log.info(
-    string.format(
-        "%s v%s loaded.",
-        script.name,
-        script.version
-    )
-)
+log.info("Dual UI Example loaded.")
